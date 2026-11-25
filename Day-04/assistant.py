@@ -8,6 +8,8 @@ from tools import (
     generate_password
 )
 
+from tool_manager import execute_tool
+
 
 # Load configuration
 load_dotenv()
@@ -61,24 +63,13 @@ while True:
     user_input = input("\nYou : ")
     # Save the user's message
 
-    if "time" in user_input.lower():
+    tool_result = execute_tool(user_input)
 
-        print("\nAI :", get_current_time())
+    if tool_result:
 
-        continue
-
-    if "dice" in user_input.lower():
-
-        print("\nAI : You rolled", roll_dice())
+        print("\nAI :", tool_result)
 
         continue
-
-    if "password" in user_input.lower():
-
-        print("\nAI :", generate_password())
-
-        continue
-
 
     messages.append(
         {
