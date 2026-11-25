@@ -2,6 +2,13 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
+from tools import (
+    get_current_time,
+    roll_dice,
+    generate_password
+)
+
+
 # Load configuration
 load_dotenv()
 
@@ -16,12 +23,17 @@ print("      My AI Assistant")
 print("=" * 40)
 
 roles = {
-    "1": "You are a friendly teacher. Explain every concept in simple language with the real-life examples.",
-    "2": "You are a senior python developer. Explain every concept in simple language including python examples.",
-    "3": "You are an experienced travel guide. Recommend places,food, transportation and travel tips.",
+    "1": "You are a friendly school teacher. Explain every concept using simple language and real-life examples.",
+
+    "2": "You are a senior Python developer. Explain programming concepts clearly and always include Python examples.",
+
+    "3": "You are an experienced travel guide. Recommend places, food, transportation and travel tips.",
+
     "4": "You are a motivational coach. Encourage the user and give practical advice with a positive attitude.",
-    "5": "You are a professional interviewer. Ask one interview question at a time and provide feedback after each answer.",
-    }
+
+    "5": "You are a professional interviewer. Ask one interview question at a time and provide feedback after each answer."
+}
+
 
 print("\nChoose Your Assistant\n")
 
@@ -31,7 +43,7 @@ print("3. Travel Guide")
 print("4. Motivational Coach")
 print("5. Interviewer")
 
-choice = input("\nEnter your choice:")
+choice = input("\nEnter your choice : ")
 
 messages = [
     {
@@ -43,14 +55,37 @@ messages = [
     }
 ]
 
+
 while True:
 
     user_input = input("\nYou : ")
+    # Save the user's message
 
-    messages.append({
-        "role": "user",
-        "content": user_input
-    })
+    if "time" in user_input.lower():
+
+        print("\nAI :", get_current_time())
+
+        continue
+
+    if "dice" in user_input.lower():
+
+        print("\nAI : You rolled", roll_dice())
+
+        continue
+
+    if "password" in user_input.lower():
+
+        print("\nAI :", generate_password())
+
+        continue
+
+
+    messages.append(
+        {
+            "role": "user",
+            "content": user_input
+        }
+    )
 
     if user_input.lower() == "quit":
         print("\nAI  : Goodbye! Have a great day.")
@@ -58,28 +93,19 @@ while True:
 
     response = client.chat.completions.create(
         model=os.getenv("MODEL"),
-        messages= messages
+        messages=messages
     )
 
     ai_reply = response.choices[0].message.content
 
     print("\nAI :", ai_reply)
 
-    # Save the AI's Reply
-    messages.append({
+    # Save the AI's reply
+    messages.append(
+        {
             "role": "assistant",
             "content": ai_reply
-        })
-
-    # print("\n----------------Conversation Memory -----------------------------------")
-    # for message in messages:
-    #     print(message)
-    # print("-------------------------------------------------------------------------")
+        }
+    )
 
     
-    # print("\n===================== Conversation Memory =============================")
-    # for message in messages:
-    #     print(f"{message['role'].title()}: {message['content']}")
-    # print("==========================================================================")
-
-
