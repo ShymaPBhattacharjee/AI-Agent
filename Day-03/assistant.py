@@ -15,10 +15,31 @@ print("=" * 40)
 print("      My AI Assistant")
 print("=" * 40)
 
+roles = {
+    "1": "You are a friendly teacher. Explain every concept in simple language with the real-life examples.",
+    "2": "You are a senior python developer. Explain every concept in simple language including python examples.",
+    "3": "You are an experienced travel guide. Recommend places,food, transportation and travel tips.",
+    "4": "You are a motivational coach. Encourage the user and give practical advice with a positive attitude.",
+    "5": "You are a professional interviewer. Ask one interview question at a time and provide feedback after each answer.",
+    }
+
+print("\nChoose Your Assistant\n")
+
+print("1. Teacher")
+print("2. Python Expert")
+print("3. Travel Guide")
+print("4. Motivational Coach")
+print("5. Interviewer")
+
+choice = input("\nEnter your choice:")
+
 messages = [
     {
         "role": "system",
-        "content": "You're a friendly AI Teacher. Explain every concept in simple language with the real-life examples."
+        "content": roles.get(
+            choice,
+            "You are a helpful AI assistant."
+        )
     }
 ]
 
