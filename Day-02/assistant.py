@@ -45,3 +45,15 @@ while True:
             "content": ai_reply
         })
 
+    # print("\n----------------Conversation Memory -----------------------------------")
+    # for message in messages:
+    #     print(message)
+    # print("-------------------------------------------------------------------------")
+
+    
+    print("\n===================== Conversation Memory =============================")
+    for message in messages:
+        print(f"{message['role'].title()}: {message['content']}")
+    print("==========================================================================")
+
+
