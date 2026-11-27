@@ -32,8 +32,14 @@ def generate_password(length=12):
     return password
 
 def read_text_file(filename):
+
     try:
+
         with open(filename, "r") as file:
+
             return file.read()
+
     except FileNotFoundError:
+
         return "Error: File not found."
+
